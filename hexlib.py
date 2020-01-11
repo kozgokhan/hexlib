@@ -1,4 +1,3 @@
-
 # convert little endian to big endian
 def le2be(lestr):
     be = ''
@@ -27,15 +26,14 @@ def data2int(datastr, sign, bytenum, resolution, minval, maxval, offset):
         return max(min(offset + resolution * int(datastr, 16), maxval), minval)
 
 # check if the checksum correct
-def checksum_control(record):
+def record_checksum_control(record):
     reclen = len(record)
     sum = 0
     for i in range(1, reclen-2, 2):
         sum += int('0x' + record[i:i+2], 16)
     
-    sumhex = hex(sum)
-    comp = 256 - int(sumhex[len(sumhex)-2:], 16)
-
+    comp = int(hex(256-sum)[2:][-2:], 16)
+    print(comp)
     return comp == int('0x' + record[(reclen-2):], 16)
 
 
@@ -46,5 +44,5 @@ def get_checksum(record):
     for i in range(1, reclen-2, 2):
         sum += int('0x' + record[i:i+2], 16)
     
-    sumhex = hex(sum)
-    return hex(256 - int(sumhex[len(sumhex)-2:], 16))
+    sumlsb = int(hex(sum)[2:][-2:], 16)
+    return hex(256 - sumlsb)
