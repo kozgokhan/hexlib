@@ -15,8 +15,9 @@ print(hexlib.read_record(testrec))
 # code here
 
 # checksum_control()
-hx = ':0300300002337A1E'
-print(hexlib.checksum_control(hx))
+# get the checksum of a given record
+hx = ':20A04000000000000000000000000000000000000000000000000000000000000000000000'
+print(hexlib.record_checksum_control(hx))
 
 # get_checksum()
-print(hexlib.get_checksum(testrec))
+print(hexlib.get_checksum(hx))
